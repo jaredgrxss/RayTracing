@@ -21,6 +21,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <assert.h>
+#include "color.h"
+#include "vec3.h"
 using namespace std;
 
 
@@ -34,19 +36,14 @@ int main(){
     cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
     for(int i = image_height-1; i >= 0; i--){
-        cout << "Scanlines remaining: " << i << ' ' << endl;
+        cerr << "Scanlines remaining: " << i << ' ' << flush;
         for(int j = 0; j < image_width; j++){
-            auto r = double(j) / (image_width-1);
-            auto g = double(i) / (image_height-1);
-            auto b = 0.25;
-
-            int ir = static_cast<int>(255.999 * r);
-            int ig = static_cast<int>(255.999 * g);
-            int ib = static_cast<int>(255.999 * b);
-
-            cout << ir << ' ' << ig << ' ' << ib << '\n';
+            color pixel_color(double(j)/(image_width-1), double(i)/(image_height-1), 0.25);
+            write_color(cout, pixel_color);
         }
     }
+
+    cerr << "\nDone.\n";
 
     return 0;
 }
